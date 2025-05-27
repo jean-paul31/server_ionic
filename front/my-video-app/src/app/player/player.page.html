@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lecture vidéo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <video *ngIf="videoUrl" [src]="videoUrl" controls autoplay style="width: 100%; height: 100%;"></video>
+  <p *ngIf="!videoUrl">Aucune vidéo sélectionnée.</p>
+</ion-content>
