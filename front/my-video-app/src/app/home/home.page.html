@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-button *ngIf="currentPath" (click)="goBack()">
+  <ion-button *ngIf="currentPath" (click)="goBack()" class="ion-margin">
     ← Retour
   </ion-button>
 
@@ -17,11 +17,18 @@
     </ion-item>
   </ion-list>
 
-  <ion-list>
-    <ion-list-header>Vidéos</ion-list-header>
-    <ion-item button *ngFor="let video of videos" (click)="onVideoClick(video)">
-      <ion-icon slot="start" name="videocam"></ion-icon>
-      {{ video }}
-    </ion-item>
-  </ion-list>
+  <ion-list-header>Vidéos</ion-list-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" sizeMd="4" sizeLg="3" *ngFor="let video of videos">
+        <ion-card (click)="onVideoClick(video)">
+          <img [src]="getThumbnail(video)" alt="Vignette de {{ video }}">
+          <ion-card-header>
+            <ion-card-title>{{ getVideoTitle(video) }}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

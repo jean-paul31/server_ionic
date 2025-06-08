@@ -25,3 +25,32 @@
 #container a {
   text-decoration: none;
 }
+
+ion-card {
+  width: 100%;
+  max-width: 300px; /* largeur fixe de la carte */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+ion-card img {
+  width: 100%;        /* largeur fixe */
+  height: auto;       /* hauteur automatique pour garder les proportions */
+  border-radius: 8px 8px 0 0;
+  display: block;
+}
+
+ion-card-header {
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+ion-card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+

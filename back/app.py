@@ -11,27 +11,6 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 BASE_FOLDER = 'C:/Users/tonto/OneDrive/Documents/Vuze Downloads/'
 
 
-# Route web avec template HTML (navigateur)
-# @app.route('/', defaults={'subpath': ''})
-# @app.route('/<path:subpath>')
-# def index(subpath):
-#     # Calcul du chemin absolu
-#     current_path = os.path.abspath(os.path.join(BASE_FOLDER, subpath))
-
-#     # Sécurité : interdit de sortir de BASE_FOLDER
-#     if not current_path.startswith(os.path.abspath(BASE_FOLDER)):
-#         abort(403)
-
-#     if not os.path.exists(current_path) or not os.path.isdir(current_path):
-#         return "Chemin introuvable", 404
-
-#     # Lister les dossiers et vidéos
-#     items = os.listdir(current_path)
-#     folders = [f for f in items if os.path.isdir(os.path.join(current_path, f))]
-#     videos = [f for f in items if os.path.isfile(os.path.join(current_path, f)) and f.lower().endswith(('.mp4', '.avi', '.mkv'))]
-
-    # return render_template('index.html', folders=folders, videos=videos, subpath=subpath)
-
 
 # Route API pour frontend (Ionic ou autre)
 @app.route('/api/list', defaults={'subpath': ''})

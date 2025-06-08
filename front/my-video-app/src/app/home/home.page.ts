@@ -45,10 +45,10 @@ export class HomePage implements OnInit {
     this.loadList(newPath);
   }
 
-onVideoClick(video: string) {
-  const videoUrl = `http://192.168.0.31:5000/videos/${this.currentPath ? this.currentPath + '/' : ''}${video}`;
-  this.router.navigate(['/player'], { queryParams: { url: videoUrl } });
-}
+  onVideoClick(video: string) {
+    const videoUrl = `http://192.168.0.31:5000/videos/${this.currentPath ? this.currentPath + '/' : ''}${video}`;
+    this.router.navigate(['/player'], { queryParams: { url: videoUrl } });
+  }
 
   // Optionnel : bouton retour en arrière
   goBack() {
@@ -57,4 +57,53 @@ onVideoClick(video: string) {
     parts.pop();
     this.loadList(parts.join('/'));
   }
+
+getThumbnail(video: string): string {
+  if (!this.currentPath) return 'assets/default.jpg';
+
+  const parts = this.currentPath.split('/');
+
+  if (parts.length === 1) {
+    // 🎬 Films
+    const film = parts[0];
+
+    // Cherche un numéro dans le nom de la vidéo (ex: inssaisissable 2.mp4 → 2)
+    const match = video.match(/(\d+)/);
+    const number = match ? match[1] : '1'; // défaut: 1
+
+    return `assets/thumbnails/${film}/${number}/poster.jpg`;
+  }
+
+  if (parts.length >= 2) {
+    // 📺 Séries
+    const serie = parts[0];
+
+    // Nettoie le nom du dossier de saison (ex: "saison 1" → "S1")
+    let saisonRaw = parts[1].toLowerCase().replace(/\s+/g, '').replace('saison', 's');
+    if (!saisonRaw.startsWith('s')) {
+      saisonRaw = 's' + saisonRaw;
+    }
+
+    const saison = saisonRaw.toUpperCase();
+    return `assets/thumbnails/${serie}/${saison}/poster.jpg`;
+  }
+
+  return 'assets/default.jpg';
+}
+
+getVideoTitle(video: string): string {
+  // Enlève l'extension .mp4
+  let title = video.replace(/\.[^/.]+$/, '');
+
+  // Remplace les underscores et tirets par des espaces
+  title = title.replace(/[_-]+/g, ' ');
+
+  // Met une majuscule au début de chaque mot
+  title = title.replace(/\b\w/g, (match) => match.toUpperCase());
+
+  return title;
+}
+
+
+
 }
