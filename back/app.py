@@ -8,7 +8,7 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 # Autorise les requêtes depuis Ionic ou autres frontends
 
 # Dossier racine où se trouvent les vidéos
-BASE_FOLDER = 'C:/Users/tonto/OneDrive/Documents/Vuze Downloads/'
+BASE_FOLDER = 'F:/films'
 
 
 

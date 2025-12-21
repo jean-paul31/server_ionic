@@ -1,0 +1,11 @@
+<header class="navbar navbar-dark bg-primary p-3">
+  <button (click)="goBack()" class="btn btn-light">← Retour</button>
+  <h1 class="text-white mx-auto">Lecture vidéo</h1>
+</header>
+
+<main class="container mt-4">
+  <div class="embed-responsive embed-responsive-16by9" *ngIf="videoUrl">
+    <video [src]="videoUrl" controls autoplay class="embed-responsive-item w-100"></video>
+  </div>
+  <p *ngIf="!videoUrl" class="text-danger text-center">Aucune vidéo sélectionnée.</p>
+</main>
