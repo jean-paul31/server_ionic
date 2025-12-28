@@ -45,7 +45,8 @@ export class HomePage implements OnInit {
   }
 
   onVideoClick(video: string) {
-    const videoUrl = `http://192.168.0.40:5000/videos/${this.currentPath ? this.currentPath + '/' : ''}${video}`;
+    const videoUrl = `http://127.0.0.1:5000/videos/${this.currentPath ? this.currentPath + '/' : ''}${video}`; //prod
+    // const videoUrl = `http://server.local:5000/videos/${this.currentPath ? this.currentPath + '/' : ''}${video}`; //dev 
     this.router.navigate(['/player'], { queryParams: { url: videoUrl } });
   }
 
