@@ -14,7 +14,7 @@ export interface ApiResponse {
 export class VideoService {
   // Remplace par l'IP locale de ton PC et port 5000
   private baseUrl = 'http://localhost:5000/api/list'; // dev
-  // private baseUrl = 'http://server.local:5000/api/list'; //prod
+  // private baseUrl = 'http://192.168.0.23:5000'; //prod
 
   constructor(private http: HttpClient) {}
 

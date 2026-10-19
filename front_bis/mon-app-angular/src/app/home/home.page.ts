@@ -61,33 +61,29 @@ export class HomePage implements OnInit {
 getThumbnail(video: string): string {
   if (!this.currentPath) return 'assets/default.jpg';
 
-  const parts = this.currentPath.split('/');
+  const parts = this.currentPath.split('/').filter(p => p.length > 0);
+  const root = parts[0];
+  console.log(root);
+  
 
+  // 🎬 Cas des FILMS (Dossier racine uniquement)
   if (parts.length === 1) {
-    // 🎬 Films
-    const film = parts[0];
+    // On cherche un chiffre isolé (ex: "Film 2.mp4") ou on prend 1 par défaut
+    const match = video.match(/(?:^|\s)(\d+)(?:\.|\s|$)/);
+    const number = match ? match[1] : '1';
 
-    // Cherche un numéro dans le nom de la vidéo (ex: inssaisissable 2.mp4 → 2)
-    const match = video.match(/(\d+)/);
-    const number = match ? match[1] : '1'; // défaut: 1
+    return `assets/thumbnails/${root}/${number}/poster.jpg`;
+  } else  if (parts.length >= 2) { 
+    // const seasonFolder = parts[1];
+    // On extrait uniquement les chiffres pour reconstruire le format "SX"
+    const seasonMatch = parts[1].match(/\d+/);
+    const seasonTag = `S${seasonMatch ? seasonMatch[0] : '1'}`;
 
-    return `assets/thumbnails/${film}/${number}/poster.jpg`;
+    return `assets/thumbnails/${root}/${seasonTag}/poster.jpg`;
+  } else {
+    return 'assets/default.jpg';
   }
 
-  if (parts.length >= 2) {
-    // 📺 Séries
-    const serie = parts[0];
-    // Nettoie le nom du dossier de saison (ex: "saison 1" → "S1")
-    let saisonRaw = parts[1].toLowerCase().replace(/\s+/g, '').replace('saison', 's');
-    if (!saisonRaw.startsWith('s')) {
-      saisonRaw = 's' + saisonRaw;
-    }
-
-    const saison = saisonRaw.toUpperCase();
-    return `assets/thumbnails/${serie}/${saison}/poster.jpg`;
-  }
-
-  return 'assets/default.jpg';
 }
 
 getVideoTitle(video: string): string {
