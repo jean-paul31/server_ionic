@@ -1,6 +1,7 @@
-from flask import Flask, render_template, url_for, send_from_directory, abort, jsonify
+from flask import Flask, render_template, url_for, send_file, abort, jsonify
 from flask_cors import CORS
 import os
+import mimetypes
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -8,7 +9,7 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 # Autorise les requêtes depuis Ionic ou autres frontends
 
 # Dossier racine où se trouvent les vidéos
-BASE_FOLDER = 'F:/films'
+BASE_FOLDER = '/mnt/stockage/films/'
 
 
 
@@ -42,12 +43,20 @@ def api_list(subpath):
 @app.route('/videos/<path:filename>')
 def videos(filename):
     safe_path = os.path.abspath(os.path.join(BASE_FOLDER, filename))
+
     if not safe_path.startswith(os.path.abspath(BASE_FOLDER)):
         abort(403)
 
-    directory = os.path.dirname(safe_path)
-    file = os.path.basename(safe_path)
-    return send_from_directory(directory, file)
+    if not os.path.exists(safe_path):
+        abort(404)
+
+    mime_type, _ = mimetypes.guess_type(safe_path)
+
+    return send_file(
+        safe_path,
+        mimetype=mime_type,
+        conditional=True
+    )
 
 
 # Route pour télécharger une vidéo
