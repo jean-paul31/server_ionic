@@ -1,4 +1,4 @@
-#!/media/jp/SDATA22/projects/server_ionic/back/venv/bin/python3
+#!/media/jp/SDATA23/projects/server_ionic/back/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

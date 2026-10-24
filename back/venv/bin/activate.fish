@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /media/jp/SDATA22/projects/server_ionic/back/venv
+set -gx VIRTUAL_ENV /media/jp/SDATA23/projects/server_ionic/back/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH
