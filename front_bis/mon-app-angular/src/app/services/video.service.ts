@@ -8,6 +8,21 @@ export interface ApiResponse {
   subpath: string;
 }
 
+export interface StreamResponse {
+  videoUrl: string;
+  audioTracks: {
+    index: number;
+    language: string;
+    label: string;
+  }[];
+  subtitleTracks: {
+    index: number;
+    url: string;
+    language: string;
+    label: string;
+  }[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,5 +36,10 @@ export class VideoService {
   list(subpath: string = ''): Observable<ApiResponse> {
     const url = subpath ? `${this.baseUrl}/${subpath}` : this.baseUrl;
     return this.http.get<ApiResponse>(url);
+  }
+
+  createStream(filename: string): Observable<StreamResponse> {
+    const streamEndpoint = this.baseUrl.replace(/\/list$/, '/stream');
+    return this.http.post<StreamResponse>(streamEndpoint, { filename });
   }
 }

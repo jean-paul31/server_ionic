@@ -4,8 +4,51 @@
 </header>
 
 <main class="container mt-4">
-  <div class="embed-responsive embed-responsive-16by9" *ngIf="videoUrl">
-    <video [src]="videoUrl" controls autoplay class="embed-responsive-item w-100"></video>
+  <p *ngIf="loading" class="text-center" role="status">Préparation de la vidéo…</p>
+
+  <div class="track-controls" *ngIf="!loading && !errorMessage">
+    <label *ngIf="audioTracks.length > 1">
+      Langue audio
+      <select [value]="selectedAudioTrack" (change)="onAudioTrackChange($event)">
+        <option *ngFor="let track of audioTracks" [value]="track.index">
+          {{ track.label }}
+        </option>
+      </select>
+    </label>
+
+    <label *ngIf="subtitleTracks.length">
+      Sous-titres
+      <select [value]="selectedSubtitleTrack" (change)="onSubtitleTrackChange($event)">
+        <option value="-1">Désactivés</option>
+        <option *ngFor="let track of subtitleTracks; let index = index" [value]="index">
+          {{ track.label }}
+        </option>
+      </select>
+    </label>
   </div>
-  <p *ngIf="!videoUrl" class="text-danger text-center">Aucune vidéo sélectionnée.</p>
+
+  <div class="video-container">
+    <video
+      #videoElement
+      controls
+      autoplay
+      playsinline
+      class="w-100"
+      (loadedmetadata)="loading = false"
+      (error)="onVideoError()">
+      <track
+        *ngFor="let track of subtitleTracks"
+        kind="subtitles"
+        [src]="track.url"
+        [srclang]="track.language"
+        [label]="track.label">
+    </video>
+  </div>
+
+  <p *ngIf="languageChangeMessage" class="text-muted text-center">
+    {{ languageChangeMessage }}
+  </p>
+  <p *ngIf="errorMessage" class="text-danger text-center" role="alert">
+    {{ errorMessage }}
+  </p>
 </main>

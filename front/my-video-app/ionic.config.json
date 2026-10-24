@@ -1,7 +1,0 @@
-{
-  "name": "my-video-app",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}

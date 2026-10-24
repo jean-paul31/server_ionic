@@ -1,0 +1,17 @@
+.track-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.track-controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.video-container video {
+  max-height: 75vh;
+  background: #000;
+}
