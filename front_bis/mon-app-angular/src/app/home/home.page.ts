@@ -45,8 +45,9 @@ export class HomePage implements OnInit {
   }
 
   onVideoClick(video: string) {
-    const filename = this.currentPath ? `${this.currentPath}/${video}` : video;
-    this.router.navigate(['/player'], { queryParams: { file: filename } });
+    const videoUrl = `http://192.168.0.10:5000/videos/${this.currentPath ? this.currentPath + '/' : ''}${video}`; //prod
+    // const videoUrl = `http://server.local:5000/videos/${this.currentPath ? this.currentPath + '/' : ''}${video}`; //dev 
+    this.router.navigate(['/player'], { queryParams: { url: videoUrl } });
   }
 
   // Optionnel : bouton retour en arrière

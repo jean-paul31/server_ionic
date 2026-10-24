@@ -29,7 +29,7 @@ export interface StreamResponse {
 export class VideoService {
   // Remplace par l'IP locale de ton PC et port 5000
   private baseUrl = 'http://192.168.0.10:5000/api/list'; // dev
-  // private baseUrl = 'http://192.168.0.23:5000'; //prod
+  // private baseUrl = 'http://server.local:5000/api/list'; //prod
 
   constructor(private http: HttpClient) {}
 

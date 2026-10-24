@@ -1,4 +1,4 @@
-from flask import Flask, Response, url_for, send_from_directory, abort, jsonify, request
+from flask import Flask, render_template, url_for, send_file, abort, jsonify
 from flask_cors import CORS
 import json
 import math
@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import threading
+import mimetypes
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}, r"/videos/*": {"origins": "*"}})
@@ -282,10 +283,21 @@ def api_list(subpath):
 # Route pour lire une vidéo
 @app.route('/videos/<path:filename>')
 def videos(filename):
-    safe_path = resolve_video_path(filename)
-    directory = os.path.dirname(safe_path)
-    file = os.path.basename(safe_path)
-    return send_from_directory(directory, file)
+    safe_path = os.path.abspath(os.path.join(BASE_FOLDER, filename))
+
+    if not safe_path.startswith(os.path.abspath(BASE_FOLDER)):
+        abort(403)
+
+    if not os.path.exists(safe_path):
+        abort(404)
+
+    mime_type, _ = mimetypes.guess_type(safe_path)
+
+    return send_file(
+        safe_path,
+        mimetype=mime_type,
+        conditional=True
+    )
 
 
 # Route pour télécharger une vidéo
