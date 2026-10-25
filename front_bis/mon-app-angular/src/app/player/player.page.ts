@@ -89,6 +89,7 @@ export class PlayerPage implements OnInit {
     this.errorMessage = '';
     this.videoService.createStream(this.filename).subscribe({
       next: response => {
+        this.loading = false;
         this.applyStream(response);
       },
       error: (error: unknown) => {
